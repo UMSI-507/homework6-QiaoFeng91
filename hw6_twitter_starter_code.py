@@ -12,20 +12,20 @@ import secrets as secrets  # file that contains your OAuth credentials
 CACHE_FILENAME = "twitter_cache.json"
 CACHE_DICT = {}
 
-#client_key = secrets.TWITTER_API_KEY
-#client_secret = secrets.TWITTER_API_SECRET
-#access_token = secrets.TWITTER_ACCESS_TOKEN
-#access_token_secret = secrets.TWITTER_ACCESS_TOKEN_SECRET
+client_key = secrets.TWITTER_API_KEY
+client_secret = secrets.TWITTER_API_SECRET
+access_token = secrets.TWITTER_ACCESS_TOKEN
+access_token_secret = secrets.TWITTER_ACCESS_TOKEN_SECRET
 
-TWITTER_API_KEY="m8Z2kh9MbDdD4xKrusZqYvs34"
-TWITTER_API_SECRET="sOiMJATSPbycjh0H8xoK8kWMkySvv9guyUA5HMtQ3RY7ZBFjr8"
-TWITTER_ACCESS_TOKEN="1317986163110522882-sBUyEnDx3htSAuxv0PvCKfdRfZCccB"
-TWITTER_ACCESS_TOKEN_SECRET="AgojdHfn7QZkCNQ22nhC70hFPjnGiWZasTzP0y9lYZew2"
+# TWITTER_API_KEY="m8Z2kh9MbDdD4xKrusZqYvs34"
+# TWITTER_API_SECRET="sOiMJATSPbycjh0H8xoK8kWMkySvv9guyUA5HMtQ3RY7ZBFjr8"
+# TWITTER_ACCESS_TOKEN="1317986163110522882-sBUyEnDx3htSAuxv0PvCKfdRfZCccB"
+# TWITTER_ACCESS_TOKEN_SECRET="AgojdHfn7QZkCNQ22nhC70hFPjnGiWZasTzP0y9lYZew2"
 
-client_key = TWITTER_API_KEY
-client_secret = TWITTER_API_SECRET
-access_token = TWITTER_ACCESS_TOKEN
-access_token_secret = TWITTER_ACCESS_TOKEN_SECRET
+# client_key = TWITTER_API_KEY
+# client_secret = TWITTER_API_SECRET
+# access_token = TWITTER_ACCESS_TOKEN
+# access_token_secret = TWITTER_ACCESS_TOKEN_SECRET
 
 oauth = OAuth1(client_key,
             client_secret=client_secret,
