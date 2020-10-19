@@ -12,10 +12,20 @@ import secrets as secrets  # file that contains your OAuth credentials
 CACHE_FILENAME = "twitter_cache.json"
 CACHE_DICT = {}
 
-client_key = secrets.TWITTER_API_KEY
-client_secret = secrets.TWITTER_API_SECRET
-access_token = secrets.TWITTER_ACCESS_TOKEN
-access_token_secret = secrets.TWITTER_ACCESS_TOKEN_SECRET
+#client_key = secrets.TWITTER_API_KEY
+#client_secret = secrets.TWITTER_API_SECRET
+#access_token = secrets.TWITTER_ACCESS_TOKEN
+#access_token_secret = secrets.TWITTER_ACCESS_TOKEN_SECRET
+
+TWITTER_API_KEY="m8Z2kh9MbDdD4xKrusZqYvs34"
+TWITTER_API_SECRET="sOiMJATSPbycjh0H8xoK8kWMkySvv9guyUA5HMtQ3RY7ZBFjr8"
+TWITTER_ACCESS_TOKEN="1317986163110522882-sBUyEnDx3htSAuxv0PvCKfdRfZCccB"
+TWITTER_ACCESS_TOKEN_SECRET="AgojdHfn7QZkCNQ22nhC70hFPjnGiWZasTzP0y9lYZew2"
+
+client_key = TWITTER_API_KEY
+client_secret = TWITTER_API_SECRET
+access_token = TWITTER_ACCESS_TOKEN
+access_token_secret = TWITTER_ACCESS_TOKEN_SECRET
 
 oauth = OAuth1(client_key,
             client_secret=client_secret,
@@ -124,7 +134,7 @@ def make_request(baseurl, params):
     '''
     new_request = requests.get(baseurl, params, auth=oauth)
 
-    return new_request
+    return new_request.json()
 
 
 def make_request_with_cache(baseurl, hashtag, count):
@@ -159,13 +169,14 @@ def make_request_with_cache(baseurl, hashtag, count):
     params_dict["q"] = hashtag
     params_dict["count"] = count
     unique_url = construct_unique_key(baseurl, params_dict)
+    CACHE_DICT = open_cache()
 
     if unique_url in CACHE_DICT.keys():
         print("fetching cached data")
     else:
         print("making new request")
         new_request = make_request(baseurl, params_dict)
-        CACHE_DICT[unique_url] = new_request.json()
+        CACHE_DICT[unique_url] = new_request
         save_cache(CACHE_DICT)
 
     return CACHE_DICT[unique_url]
@@ -193,10 +204,10 @@ def find_most_common_cooccurring_hashtag(tweet_data, hashtag_to_ignore):
     hashtag_list = []
     for i in range(len(tweet_data['statuses'])):
         for j in range(len(tweet_data['statuses'][i]["entities"]["hashtags"])):
-            if tweet_data['statuses'][i]["entities"]["hashtags"][j]["text"].lower() != "2020election":
-                hashtag_list.append(tweet_data['statuses'][i]["entities"]["hashtags"][j]["text"])
+            if '#' + tweet_data['statuses'][i]["entities"]["hashtags"][j]["text"].lower() != hashtag_to_ignore:
+                hashtag_list.append(tweet_data['statuses'][i]["entities"]["hashtags"][j]["text"].lower())
 
-    most_common_tag = "#" + max(hashtag_list, key=hashtag_list.count)
+    most_common_tag = max(hashtag_list, key=hashtag_list.count)
 
     return most_common_tag
 
@@ -225,7 +236,7 @@ if __name__ == "__main__":
 
     tweet_data = make_request_with_cache(baseurl, hashtag, count)
     most_common_cooccurring_hashtag = find_most_common_cooccurring_hashtag(tweet_data, hashtag)
-    print("The most commonly cooccurring hashtag with {} is {}.".format(hashtag, most_common_cooccurring_hashtag))
+    print("The most commonly cooccurring hashtag with {} is {}.".format(hashtag, "#" + most_common_cooccurring_hashtag))
 
     
 
